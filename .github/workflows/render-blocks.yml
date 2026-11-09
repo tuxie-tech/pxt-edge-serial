@@ -1,0 +1,59 @@
+# Copy to .github/workflows/render-blocks.yml in the extension repo.
+#
+# On a push to a listed branch: render from the pushed commit, then commit the
+# images back onto the same branch (so they land one commit after the push).
+name: Render blocks
+
+on:
+  push:
+    branches: [master]
+    paths:                      # only re-render when sources change...
+      - '**.ts'
+      - 'pxt.json'
+      - '.github/workflows/render-blocks.yml'
+      - '!doc/renders/**'          # ...and never because of our own output
+  workflow_dispatch:            # manual re-run from the Actions tab
+
+permissions:
+  contents: write               # needed to push the images commit
+
+# One render at a time per branch; don't cancel a half-finished push.
+concurrency:
+  group: render-blocks-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Render
+        uses: tuxie-tech/gh-pxt-blocks-render@v1
+        with:
+          files: test.ts
+          output-dir: ${{ runner.temp }}/renders      # outside the checkout
+
+      - name: Commit images to the branch
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          rm -rf doc/renders
+          cp -R "$RUNNER_TEMP/renders" doc/renders
+
+          git add --all doc/renders
+          if git diff --cached --quiet; then
+            echo "Renders unchanged; nothing to commit."
+            exit 0
+          fi
+
+          # Three guards against a loop: GITHUB_TOKEN pushes don't trigger
+          # workflows, `[skip ci]` covers PAT/app tokens, and the paths filter
+          # above ignores doc/renders/**.
+          git commit -m "Update block renders [skip ci]"
+          git pull --rebase origin "$BRANCH"   # someone may have pushed meanwhile
+          git push origin "HEAD:$BRANCH"

@@ -13,7 +13,9 @@
         "enums.d.ts",
         "README.md"
     ],
-    "testFiles": [],
+    "testFiles": [
+        "test.ts"
+    ],
     "targetVersions": {
         "target": "8.0.18",
         "targetId": "microbit"
