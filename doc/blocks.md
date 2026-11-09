@@ -5,9 +5,7 @@ title: Edge Serial Blocks Guide
 
 ## Overview
 
-This page is a visual-blocks-first guide for learners.
-
-Block images are not generated automatically in this pass. Use the placeholders below to insert transparent PNG block captures.
+This page is a visual-blocks-first guide for learners. Every block is shown here exactly as it appears in MakeCode.
 
 ## Suggested block walkthrough order
 
@@ -16,23 +14,34 @@ Block images are not generated automatically in this pass. Use the placeholders 
 3. Parse received values.
 4. Tune baud rate and buffers only if needed.
 
-## Block placeholders
+## Write output blocks
 
-### Write output blocks
+![serial write line](../renders/blocks/writeLine-blocks.png)
+![serial write string](../renders/blocks/writeString-blocks.png)
+![serial write number](../renders/blocks/writeNumber-blocks.png)
 
-- Placeholder: insert transparent PNGs for write line, write string, and write number blocks.
+## Value formatting blocks
 
-### Read and event blocks
+![serial write value](../renders/blocks/writeValue-blocks.png)
 
-- Placeholder: insert transparent PNGs for read line, read until, and on-data-received blocks.
+## Read and event blocks
 
-### Value formatting blocks
+![serial read line](../renders/blocks/readLine-blocks.png)
+![serial read until](../renders/blocks/readUntil-blocks.png)
+![serial read string](../renders/blocks/readString-blocks.png)
+![serial on data received](../renders/blocks/onDataReceived-blocks.png)
 
-- Placeholder: insert transparent PNGs for write value and write numbers blocks.
+## Transport configuration blocks
 
-### Transport configuration blocks
+![serial connect](../renders/blocks/redirect-blocks.png)
+![serial set baud rate](../renders/blocks/setBaudRate-blocks.png)
+![serial set rx buffer size](../renders/blocks/setRxBufferSize-blocks.png)
+![serial set tx buffer size](../renders/blocks/setTxBufferSize-blocks.png)
+![serial set write line padding](../renders/blocks/setWriteLinePadding-blocks.png)
 
-- Placeholder: insert transparent PNGs for redirect, baud rate, and RX/TX buffer blocks.
+## Raw data blocks
+
+![serial read buffer](../renders/blocks/readBuffer-blocks.png)
 
 ## Next steps
 
