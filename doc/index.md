@@ -7,6 +7,9 @@ plugins:
     - ts-to-blocks
 tags:
     - software
+    - makecode
+hero:
+    - cat-plug.png
 ---
 
 ## Overview
